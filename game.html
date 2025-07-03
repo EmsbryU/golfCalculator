@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Björkhagen Score Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-6">
+    <h1 class="text-2xl font-bold text-center">Björkhagen Score Tracker</h1>
+    <div class="p-4 text-xs">
+        <table class="w-full table-fixed text-center">
+            <thead class="bg-gray-200 border-b-2 border-gray-600">
+                <tr id="th-tr1">
+                    <th rowspan="2">Hål</th>
+                    <th rowspan="2">Par</th>
+                    <th rowspan="2">Index</th>
+                    <!-- <th colspan="2" class="underline">Player 1</th>
+                    <th colspan="2" class="underline">Player 2</th> -->
+                </tr>
+                <tr id="th-tr2">
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            
+        </table>
+                <button onclick="resetGame()" id="resetGamebtn"
+            class="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+            Avsluta spel
+        </button>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/handicap.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Initialize UI
+        // renderGameUI();
+        generateScoreCard();
+    </script>
+
+</body>
+
+</html>
