@@ -10,24 +10,37 @@ function updateGameDescription() {
         skins: "Each hole is worth a point (a skin). Win a hole outright to earn it. Ties carry over.",
         matchplay: "Players compete hole-by-hole. Whoever wins more holes wins the match. Ties give half-points",
         copenhagen: "3 or more player game. 6 points available per hole, 4 points to the winner, 2 points to second place. Ties split the points",
+        twoVStwoMatch: "2 vs 2 scramble match play, combined scramble handicaps are calculated. 1 point per hole and ties give half-points",
+        twoVStwoSkins: "2 vs 2 scramble skins, combined scramble handicaps are calculated. Win a hole outright for 1 point. Ties carry over.",
     };
 
     descEl.textContent = descriptions[gameType] || '';
+    console.log(gameType);
+    updatePlayerForms(gameType);
 }
 
+function updatePlayerForms(gameType) {
+    switch (gameType) {
+        case "twoVStwoMatch":
+        case "twoVStwoSkins":
+            document.getElementById('player-form').classList.add('hidden');
+            document.getElementById('addPlayerBtn').classList.add('hidden');
+            document.getElementById('removePlayerBtn').classList.add('hidden');
+            document.getElementById('startGameBtn').classList.add('hidden');
 
-if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
-    // Add event listener on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', () => {
-        const gameTypeSelect = document.getElementById('gameType');
+            document.getElementById('player-form-teams').classList.remove('hidden');
+            document.getElementById('startGameTeamsBtn').classList.remove('hidden');
+            break;
+        default:
+            document.getElementById('player-form').classList.remove('hidden');
+            document.getElementById('addPlayerBtn').classList.remove('hidden');
+            document.getElementById('removePlayerBtn').classList.remove('hidden');
 
-        //   // Update description initially
-        //   updateGameDescription();
-
-        // Update description whenever selection changes
-        gameTypeSelect.addEventListener('change', updateGameDescription);
-    });
-};
+            document.getElementById('player-form-teams').classList.add('hidden');
+            document.getElementById('startGameTeamsBtn').classList.add('hidden');
+            break;
+    }
+}
 
 function addPlayer() {
     const container = document.getElementById('player-form');
@@ -227,20 +240,26 @@ function updatePoints(event) {
     }
     //Compare
     const gameType = gameData.gameType;
-    if(gameType == 'copenhagen') {
+    if (gameType == 'copenhagen') {
         points = copenhagenPoints(adjustedScores);
     }
-    if(gameType == 'matchplay') {
+    if (gameType == 'matchplay') {
         points = matchplayPoints(adjustedScores);
     }
-    if(gameType == 'skins') {
+    if (gameType == 'twoVStwoMatch') {
+        points = matchplayPoints(adjustedScores);
+    }
+    if (gameType == 'skins') {
+        points = skinsPoints(adjustedScores, hole);
+    }
+    if (gameType == 'twoVStwoSkins') {
         points = skinsPoints(adjustedScores, hole);
     }
 
-     // Save number of points to localStorage
-     gameData.points[hole] = points;
-     localStorage.setItem(gameKey, JSON.stringify(gameData));
-    
+    // Save number of points to localStorage
+    gameData.points[hole] = points;
+    localStorage.setItem(gameKey, JSON.stringify(gameData));
+
     //Give points
     for (let i = 0; i < players.length; i++) {
         document.getElementById(players[i] + '-point-' + hole).innerText = points[i];

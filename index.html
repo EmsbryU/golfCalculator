@@ -18,13 +18,15 @@
             <option value="skins">Skins</option>
             <option value="matchplay">Match Play</option>
             <option value="copenhagen">Copenhagen</option>
+            <option value="twoVStwoMatch">2v2 Scramble Match</option>
+            <option value="twoVStwoSkins">2v2 Scramble Skins</option>
         </select>
 
         <!-- Game Description -->
         <p id="gameDescription" class="text-sm text-gray-600 mt-2"></p>
 
-        <!-- Player Inputs -->
-        <div id="player-form" class="space-y-2">
+        <!-- Player Inputs Single-->
+        <div id="player-form" class="player-form space-y-2">
 
             <div class="player-entry flex flex-wrap">
                 <input type="text" placeholder="Player 1" class="player-name w-full border rounded p-2" />
@@ -46,7 +48,7 @@
 
             <div class="player-entry flex flex-wrap">
                 <input type="text" placeholder="Player 2" class="player-name w-full border rounded p-2" />
-                
+
                 <select class="player-gender border rounded p-2 w-20">
                     <option value="male">Man</option>
                     <option value="female">Kvinna</option>
@@ -72,8 +74,93 @@
             Ta bort spelare
         </button>
 
-        <button onclick="startGame()" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">Start
+        <!-- Player Inputs Teams-->
+        <div id="player-form-teams" class="player-form space-y-2">
+            <p>
+                Team 1:
+            </p>
+            <div class="player-entry flex flex-wrap">
+                <input type="text" placeholder="Player 1" class="player-name w-full border rounded p-2" />
+
+                <select class="player-gender border rounded p-2 w-20">
+                    <option value="male">Man</option>
+                    <option value="female">Kvinna</option>
+                </select>
+
+                <select class="player-tee border rounded p-2 w-20">
+                    <option value="yellow">Gul</option>
+                    <option value="blue">Blå</option>
+                    <option value="red">Röd</option>
+                </select>
+
+                <input type="number" min="0" max="54" placeholder="HCP"
+                    class="player-handicap border rounded p-2 w-20" />
+            </div>
+
+            <div class="player-entry flex flex-wrap">
+                <input type="text" placeholder="Player 2" class="player-name w-full border rounded p-2" />
+
+                <select class="player-gender border rounded p-2 w-20">
+                    <option value="male">Man</option>
+                    <option value="female">Kvinna</option>
+                </select>
+
+                <select class="player-tee border rounded p-2 w-20">
+                    <option value="yellow">Gul</option>
+                    <option value="blue">Blå</option>
+                    <option value="red">Röd</option>
+                </select>
+                <input type="number" min="0" max="54" placeholder="HCP"
+                    class="player-handicap border rounded p-2 w-20" />
+            </div>
+
+            <p>
+                Team 2:
+            </p>
+
+            <div class="player-entry flex flex-wrap">
+                <input type="text" placeholder="Player 1" class="player-name w-full border rounded p-2" />
+
+                <select class="player-gender border rounded p-2 w-20">
+                    <option value="male">Man</option>
+                    <option value="female">Kvinna</option>
+                </select>
+
+                <select class="player-tee border rounded p-2 w-20">
+                    <option value="yellow">Gul</option>
+                    <option value="blue">Blå</option>
+                    <option value="red">Röd</option>
+                </select>
+
+                <input type="number" min="0" max="54" placeholder="HCP"
+                    class="player-handicap border rounded p-2 w-20" />
+            </div>
+
+            <div class="player-entry flex flex-wrap">
+                <input type="text" placeholder="Player 2" class="player-name w-full border rounded p-2" />
+
+                <select class="player-gender border rounded p-2 w-20">
+                    <option value="male">Man</option>
+                    <option value="female">Kvinna</option>
+                </select>
+
+                <select class="player-tee border rounded p-2 w-20">
+                    <option value="yellow">Gul</option>
+                    <option value="blue">Blå</option>
+                    <option value="red">Röd</option>
+                </select>
+                <input type="number" min="0" max="54" placeholder="HCP"
+                    class="player-handicap border rounded p-2 w-20" />
+            </div>
+        </div>
+
+        <button onclick="startGame()" id="startGameBtn" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">Start
             Game</button>
+
+        <button onclick="startGameTeams()" id="startGameTeamsBtn" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">Start
+            Game</button>
+
+
     </div>
 
     <script src="js/storage.js"></script>
