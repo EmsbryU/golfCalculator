@@ -141,7 +141,7 @@ function matchplayPoints(scores){
   return points;
 }
 
-function matchplayPoints(scores){
+function skinsPoints(scores, hole){
   const indexedScores = scores.map((score, i) => ({ index: i, score }));
   
   // Sort by score ascending (lower is better)
@@ -154,14 +154,31 @@ function matchplayPoints(scores){
   const firstPlace = indexedScores.filter(p => p.score === bestScore);
 
   if (firstPlace.length > 1) {
-    // Tie for first
-    firstPlace.forEach(p => points[p.index] = 1/firstPlace.length);
     return points; // No second place awarded
   } else {
     // Single first place
-    points[firstPlace[0].index] = 1;
+    const prevTies = checkForPrevTies(hole);
+    points[firstPlace[0].index] = 1 + prevTies;
   }
 
   return points;
+}
+
+function checkForPrevTies(hole) {
+    // Check for previous ties
+    const gameData = JSON.parse(localStorage.getItem(gameKey));
+    prevTies = 0;
+    for(let i = hole-1; i > 0; i--) {
+
+      for(let j = 0; j < gameData.players.length; j++) {
+        if(gameData.points[i][j] != 0) {
+          return prevTies;
+        }
+      }
+
+      prevTies++;
+
+    }
+    return prevTies;
 }
 

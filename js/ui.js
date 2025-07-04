@@ -211,31 +211,41 @@ function updatePoints(event) {
         return;
     }
 
+    // Save number of strokes to localStorage
+    gameData.strokes[hole] = scores;
+
     //Remove number of extra strokes
     const playingHandicaps = gameData.players.map(player => player.playingHandicap);
     const index = indexes[hole - 1];
+    let adjustedScores = scores
 
     for (let i = 0; i < players.length; i++) {
         const extraStrokes = Math.floor(playingHandicaps[i] / 18) + ((playingHandicaps[i] % 18) >= index ? 1 : 0);
         console.log(players[i] + "has " + extraStrokes + " extra strokes");
         console.log(index);
-        scores[i] -= extraStrokes;
+        adjustedScores[i] -= extraStrokes;
     }
     //Compare
     const gameType = gameData.gameType;
     if(gameType == 'copenhagen') {
-        points = copenhagenPoints(scores);
+        points = copenhagenPoints(adjustedScores);
     }
     if(gameType == 'matchplay') {
-        points = matchplayPoints(scores);
+        points = matchplayPoints(adjustedScores);
+    }
+    if(gameType == 'skins') {
+        points = skinsPoints(adjustedScores, hole);
     }
 
+     // Save number of points to localStorage
+     gameData.points[hole] = points;
+     localStorage.setItem(gameKey, JSON.stringify(gameData));
     
     //Give points
     for (let i = 0; i < players.length; i++) {
         document.getElementById(players[i] + '-point-' + hole).innerText = points[i];
     }
-    //Update all points
+    //Update total points
     players.forEach(player => {
         totalStrokes = 0;
         totalPoints = 0;
