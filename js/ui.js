@@ -35,6 +35,7 @@ function updatePlayerForms(gameType) {
             document.getElementById('player-form').classList.remove('hidden');
             document.getElementById('addPlayerBtn').classList.remove('hidden');
             document.getElementById('removePlayerBtn').classList.remove('hidden');
+            document.getElementById('startGameBtn').classList.remove('hidden');
 
             document.getElementById('player-form-teams').classList.add('hidden');
             document.getElementById('startGameTeamsBtn').classList.add('hidden');
@@ -115,7 +116,7 @@ function generateScoreCard() {
 
 
 
-    const table = document.querySelector('table');
+    const table = document.querySelector('#score-card-table');
 
     // Table Header
     const thead = table.querySelector('thead');
@@ -196,6 +197,77 @@ function generateScoreCard() {
         pointCol.id = player + 'totalPoints';
         resRow.appendChild(pointCol);
     });
+}
+
+function generateExtraStrokesScoreCard() {
+    // Fetch from stored data
+    const gameData = JSON.parse(localStorage.getItem(gameKey));
+    const numPlayers = gameData.players.length;
+    const players = gameData.players.map(player => player.name);
+    const handicaps = gameData.players.map(player => player.handicap);
+    const playingHandicaps = gameData.players.map(player => player.playingHandicap);
+
+    // const numPlayers = 3
+    // const players = ["Tman", "Antman", "Jake the Cake"];
+    // const handicaps = [15.4, 17.8, 5.7]
+    // const playingHandicaps = [14, 17, 3];
+    // End fetch from stored data
+
+
+
+    const table = document.querySelector('#extra-strokes-table');
+
+    // Table Header
+    const thead = table.querySelector('thead');
+    const th_tr1 = thead.querySelector('#th-tr1-2');
+    const th_tr2 = thead.querySelector('#th-tr2-2');
+
+    for (let i = 0; i < numPlayers; i++) {
+        const nameCol = document.createElement('th');
+        nameCol.innerText = players[i] + " HCP: " + handicaps[i] + " (" + playingHandicaps[i] + ")";
+        nameCol.className = 'underline';
+
+        th_tr1.appendChild(nameCol);
+
+        const STROKES = document.createElement('th');
+        STROKES.innerText = "Extra Strokes";
+        STROKES.style = "font-size: 0.5rem;"
+
+        th_tr2.appendChild(STROKES);
+    }
+
+
+
+    // Table Body
+    const tableBody = table.querySelector('tbody');
+
+    for (let i = 0; i < holes.length; i++) {
+        const row = document.createElement('tr');
+        row.className = "border-b-2 border-gray-600";
+        tableBody.appendChild(row);
+
+        const hole = document.createElement('td');
+        hole.innerText = holes[i];
+        row.appendChild(hole);
+
+        const par = document.createElement('td');
+        par.innerText = pars[i];
+        row.appendChild(par);
+
+        const index = document.createElement('td');
+        index.innerText = indexes[i];
+        row.appendChild(index);
+
+        gameData.players.forEach(player => {
+            const strokeCol = document.createElement('td');
+            strokeCol.id = player.name + "-stroke-" + holes[i];
+
+            const extraStrokes = Math.floor(player.playingHandicap / 18) + ((player.playingHandicap % 18) >= indexes[i] ? 1 : 0);
+            strokeCol.innerText = extraStrokes;
+            row.appendChild(strokeCol);
+
+        });
+    }
 }
 
 

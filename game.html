@@ -10,15 +10,13 @@
 
 <body class="bg-gray-100 min-h-screen p-6">
     <h1 class="text-2xl font-bold text-center">Björkhagen Score Tracker</h1>
-    <div class="p-4 text-xs">
-        <table class="w-full table-fixed text-center">
+    <div id="scoreCardContainer" class="p-4 text-xs">
+        <table id="score-card-table" class="w-full table-fixed text-center">
             <thead class="bg-gray-200 border-b-2 border-gray-600">
                 <tr id="th-tr1">
                     <th rowspan="2">Hål</th>
                     <th rowspan="2">Par</th>
                     <th rowspan="2">Index</th>
-                    <!-- <th colspan="2" class="underline">Player 1</th>
-                    <th colspan="2" class="underline">Player 2</th> -->
                 </tr>
                 <tr id="th-tr2">
 
@@ -27,12 +25,30 @@
             <tbody>
 
             </tbody>
-            
+
         </table>
-                <button onclick="resetGame()" id="resetGamebtn"
+        <button onclick="resetGame()" id="resetGamebtn"
             class="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
             Avsluta spel
         </button>
+    </div>
+    <div id="extraStrokesCardContainer" class="p-4 text-xs hidden">
+        <table id="extra-strokes-table" class="w-full table-fixed text-center">
+            <thead class="bg-gray-200 border-b-2 border-gray-600">
+                <tr id="th-tr1-2">
+                    <th rowspan="2">Hål</th>
+                    <th rowspan="2">Par</th>
+                    <th rowspan="2">Index</th>
+                </tr>
+                <tr id="th-tr2-2">
+
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+
+        </table>
     </div>
 
     <script src="js/storage.js"></script>
@@ -43,7 +59,9 @@
     <script>
         // Initialize UI
         // renderGameUI();
+
         generateScoreCard();
+        generateExtraStrokesScoreCard();
     </script>
 
 </body>
